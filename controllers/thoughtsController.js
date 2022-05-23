@@ -60,6 +60,25 @@ module.exports = {
       })
       .catch(err => res.status(400).json(err));
   },
+//DELETE to remove a thought by its id
+//The $pull operator removes from an existing array all instances of a value or values that match a specified condition.
+  deleteThought({ params }, res) {
+    Thought.findOneAndDelete({ _id: params.id })
+        .then(deletedThought => {
+            if (!deletedThought) {
+                return res.status(404).json({ message: 'No thought with this id!' });
+            }
+            return User.findOneAndUpdate({ _id: params.userId },{ $pull: { thoughts: params.thoughtId } }, { new: true });
+        })
+        .then(Users_db => {
+            if (!Users_db) {
+                res.status(404).json({ message: 'No user found with this id!' });
+                return;
+            }
+            res.json(Users_db);
+        })
+        .catch(err => res.json(err));
+},
   // POST to create a reaction stored in a single thought's reactions array field
   // $addToSet operator adds a value to an array unless the value is already present
   addReaction({ params }, res) {
