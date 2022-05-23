@@ -1,8 +1,10 @@
 const router = require('express').Router();
-const courseRoutes = require('./thoughtRoutes');
-const studentRoutes = require('./userRoutes');
+const apiRoutes = require('./api');
 
-router.use('/courses', courseRoutes);
-router.use('/students', studentRoutes);
+router.use('/api', apiRoutes);
+
+router.use((req, res) => {
+    res.status(404).send('<h6> hey...hey...hey 404 Error Go Back GG </h6>');
+});
 
 module.exports = router;

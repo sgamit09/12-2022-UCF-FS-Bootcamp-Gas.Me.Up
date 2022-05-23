@@ -26,7 +26,7 @@ module.exports = {
       .populate('friends')
       .select('-__v')
       .then(async (Users_db) => {
-        if (!dbUserData) {
+        if (!Users_db) {
           res.status(404).json({ message: 'No user found with this id!' });
           return;
         }
