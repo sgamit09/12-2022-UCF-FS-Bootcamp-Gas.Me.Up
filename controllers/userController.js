@@ -11,7 +11,7 @@ module.exports = {
   getUsers(req, res) {
     User.find()
       .select('-__v')
-      .then(async (Users_db) => {
+      .then((Users_db) => {
         return res.json(Users_db);
       })
       .catch((err) => {
@@ -25,7 +25,7 @@ module.exports = {
       .populate('thoughts')
       .populate('friends')
       .select('-__v')
-      .then(async (Users_db) => {
+      .then((Users_db) => {
         if (!Users_db) {
           res.status(404).json({ message: 'No user found with this id!' });
           return;
