@@ -1,8 +1,8 @@
 {
-  "name": "28-Stu_Mini-Project",
+  "name": "gas.me.up",
   "version": "1.0.1",
   "description": "Mongoose back-end project - Main",
-  "main": "index.js",
+  "main": "server.js",
   "license": "MIT",
   "scripts": {
     "start": "node server.js",
