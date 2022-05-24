@@ -14,12 +14,9 @@ module.exports = {
       });
   },
   // GET to get a single thought by its id
-  getSingleThought(req, res) {
-    Thought.findOne({ _id: req.params.id })
-      .populate('thoughts')
-      .populate('friends')
-      .select('-__v')
-      .then( (Thoughts_db) => {
+  getSingleThought({ params }, res) {
+    Thought.findOne({ _id: params.thoughtId })
+      .then((Thoughts_db) => {
         if (!Thoughts_db) {
           res.status(404).json({ message: 'No user found with this id!' });
           return;
@@ -28,7 +25,7 @@ module.exports = {
       })
       .catch((err) => {
         console.log(err);
-        return res.status(500).json(err);
+        return res.status(500).json({error: 'Something went wrong'});
       });
   },
   // POST to create a new thought
@@ -44,7 +41,7 @@ module.exports = {
             }
             res.json(Thoughts_db);
           })
-          .catch(err => res.json(err));
+          .catch(err => res.status(500).json({error: 'Something went wrong'}));
       })
   },
   // update a user by its id
@@ -58,7 +55,7 @@ module.exports = {
         }
         res.json(Thoughts_db);
       })
-      .catch(err => res.status(400).json(err));
+      .catch(err => res.status(500).json({error: 'Something went wrong'}));
   },
   //DELETE to remove a thought by its id
   //The $pull operator removes from an existing array all instances of a value or values that match a specified condition.
@@ -77,7 +74,7 @@ module.exports = {
         }
         res.json(Users_db);
       })
-      .catch(err => res.json(err));
+      .catch(err => res.status(500).json({error: 'Something went wrong'}));
   },
   // POST to create a reaction stored in a single thought's reactions array field
   // $addToSet operator adds a value to an array unless the value is already present
@@ -90,7 +87,7 @@ module.exports = {
         }
         res.json(Thoughts_db);
       })
-      .catch(err => res.status(400).json(err));
+      .catch(err => res.status(500).json({error: 'Something went wrong'}));
   },
   //DELETE to remove a friend from a user's friend list
   //The $pull operator removes from an existing array all instances of a value or values that match a specified condition.
@@ -103,7 +100,7 @@ module.exports = {
         }
         res.json(Thoughts_db);
       })
-      .catch(err => res.status(400).json(err));
+      .catch(err => res.status(500).json({error: 'Something went wrong'}));
   },
 
 }
